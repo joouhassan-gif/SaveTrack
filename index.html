@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SaveTrack</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #172033;
+            --border: #26344a;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --blue: #38bdf8;
+            --green: #22c55e;
+            --red: #ef4444;
+            --orange: #f59e0b;
+        }
+
+
+        /* =========================
+           NEW YORK
+        ========================= */
+
+        body.newyork {
+            --bg: #07111f;
+            --card: #101d30;
+            --border: #233a56;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --blue: #60a5fa;
+            --green: #22c55e;
+            --red: #f43f5e;
+            --orange: #fbbf24;
+        }
+
+
+        /* =========================
+           SPIDER MODE
+        ========================= */
+
+        body.spider {
+            --bg: #080808;
+            --card: #151515;
+            --border: #4a1111;
+            --text: #ffffff;
+            --muted: #a1a1aa;
+            --blue: #2563eb;
+            --green: #22c55e;
+            --red: #ef1d1d;
+            --orange: #facc15;
+        }
+
+
+        /* =========================
+           GOTHAM MODE
+        ========================= */
+
+        body.gotham {
+            --bg: #08090d;
+            --card: #11131a;
+            --border: #292d38;
+            --text: #f5f5f5;
+            --muted: #8b8f9a;
+            --blue: #7c8799;
+            --green: #b7b7b7;
+            --red: #8f1d1d;
+            --orange: #d6a72c;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #1a1d27 0%,
+                    #08090d 55%
+                );
+        }
+
+
+        /* =========================
+           BATMAN MODE
+        ========================= */
+
+        body.batman {
+            --bg: #050505;
+            --card: #111111;
+            --border: #343434;
+            --text: #ffffff;
+            --muted: #999999;
+            --blue: #f5c400;
+            --green: #d9b000;
+            --red: #d62828;
+            --orange: #ffd21f;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #252525 0%,
+                    #050505 60%
+                );
+        }
+
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+
+            transition:
+                background 0.5s,
+                color 0.5s;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 8%;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--blue);
+        }
+
+
+        .logo span {
+            color: var(--text);
+        }
+
+
+        .theme-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .theme-area label {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+
+        #themeSelector {
+            background: var(--card);
+            color: var(--text);
+
+            border:
+                1px solid var(--border);
+
+            padding: 9px 12px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            outline: none;
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 84%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+
+        .welcome h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+
+        .welcome p {
+            color: var(--muted);
+        }
+
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .card {
+            background: var(--card);
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid var(--border);
+
+            transition: 0.3s;
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+
+        .card h3 {
+            color: var(--muted);
+
+            font-size: 15px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .amount {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        .green {
+            color: var(--green);
+        }
+
+
+        .blue {
+            color: var(--blue);
+        }
+
+
+        .orange {
+            color: var(--orange);
+        }
+
+
+        /* =========================
+           MAIN GRID
+        ========================= */
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        .section {
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 25px;
+        }
+
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        input {
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid var(--border);
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            outline: none;
+        }
+
+
+        input:focus {
+            border-color: var(--blue);
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .save-btn {
+            background: var(--green);
+            color: white;
+        }
+
+
+        .expense-btn {
+            background: var(--red);
+            color: white;
+        }
+
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .progress-container {
+            margin-top: 15px;
+        }
+
+
+        .progress-bar {
+            width: 100%;
+
+            height: 14px;
+
+            background: var(--bg);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress {
+            height: 100%;
+
+            width: 0%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--blue),
+                    var(--green)
+                );
+
+            transition: 0.5s;
+        }
+
+
+        .progress-text {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            margin-top: 10px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           TRANSACTIONS
+        ========================= */
+
+        .transactions {
+            margin-top: 25px;
+        }
+
+
+        .transaction {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding: 15px 0;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .transaction:last-child {
+            border-bottom: none;
+        }
+
+
+        .transaction-name {
+            font-weight: bold;
+        }
+
+
+        .transaction-date {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        .income {
+            color: var(--green);
+        }
+
+
+        .expense {
+            color: var(--red);
+        }
+
+
+        .empty {
+            color: var(--muted);
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           TIP
+        ========================= */
+
+        .tip {
+            margin-top: 25px;
+        }
+
+
+        .tip p {
+            color: var(--muted);
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           SPECIAL GOTHAM EFFECT
+        ========================= */
+
+        body.gotham .logo::before {
+            content: "☾ ";
+            color: var(--orange);
+        }
+
+
+        /* =========================
+           SPECIAL BATMAN EFFECT
+        ========================= */
+
+        body.batman .logo::before {
+            content: "🦇 ";
+        }
+
+
+        body.batman .progress {
+            background:
+                linear-gradient(
+                    90deg,
+                    #f5c400,
+                    #ffd21f
+                );
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .dashboard,
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+                width: 92%;
+            }
+
+
+            header {
+                padding: 20px 4%;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Save<span>Track</span>
+    </div>
+
+
+    <div class="theme-area">
+
+        <label for="themeSelector">
+            Theme
+        </label>
+
+
+        <select id="themeSelector">
+
+            <option value="default">
+                🌙 Default
+            </option>
+
+
+            <option value="newyork">
+                🗽 New York
+            </option>
+
+
+            <option value="spider">
+                🕷️ Spider Mode
+            </option>
+
+
+            <option value="gotham">
+                🌃 Gotham
+            </option>
+
+
+            <option value="batman">
+                🦇 Batman
+            </option>
+
+        </select>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <div class="welcome">
+
+        <h1>
+            My Saving Dashboard
+        </h1>
+
+        <p>
+            Track your money. Build your future.
+        </p>
+
+    </div>
+
+
+
+    <!-- DASHBOARD -->
+
+    <div class="dashboard">
+
+
+        <div class="card">
+
+            <h3>
+                Current Savings
+            </h3>
+
+
+            <div class="amount green">
+
+                <span id="balance">
+                    0
+                </span>
+
+                EGP
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                Saving Goal
+            </h3>
+
+
+            <div class="amount blue">
+
+                <span id="goalDisplay">
+                    200000
+                </span>
+
+                EGP
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                Progress
+            </h3>
+
+
+            <div class="amount orange">
+
+                <span id="percentage">
+                    0
+                </span>
+
+                %
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- MONEY -->
+
+    <div class="main-grid">
+
+
+        <div class="section">
+
+            <h2>
+                ➕ Add Savings
+            </h2>
+
+
+            <input
+                type="number"
+                id="savingAmount"
+                placeholder="Amount in EGP"
+            >
+
+
+            <button
+                class="save-btn"
+                onclick="addSaving()"
+            >
+
+                Add Money
+
+            </button>
+
+        </div>
+
+
+
+        <div class="section">
+
+            <h2>
+                ➖ Add Expense
+            </h2>
+
+
+            <input
+                type="number"
+                id="expenseAmount"
+                placeholder="Amount in EGP"
+            >
+
+
+            <button
+                class="expense-btn"
+                onclick="addExpense()"
+            >
+
+                Add Expense
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- GOAL -->
+
+    <div
+        class="section"
+        style="margin-top:25px;"
+    >
+
+        <h2>
+            🎯 My Saving Goal
+        </h2>
+
+
+        <input
+            type="number"
+            id="goalInput"
+            placeholder="Example: 200000"
+        >
+
+
+        <button
+            class="save-btn"
+            onclick="setGoal()"
+        >
+
+            Set Goal
+
+        </button>
+
+
+        <div class="progress-container">
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+
+            <div class="progress-text">
+
+                <span id="savedText">
+                    0 EGP saved
+                </span>
+
+
+                <span id="remainingText">
+                    200,000 EGP remaining
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TRANSACTIONS -->
+
+    <div class="section transactions">
+
+        <h2>
+            📋 Recent Transactions
+        </h2>
+
+
+        <div id="transactionList">
+
+            <div class="empty">
+                No transactions yet.
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TIP -->
+
+    <div class="section tip">
+
+        <h2>
+            💡 Saving Tip
+        </h2>
+
+
+        <p id="tipText">
+            Start small. Saving a little every day
+            can become a lot over time.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================
+       SAVINGS DATA
+    ========================= */
+
+
+    let balance =
+        Number(
+            localStorage.getItem("balance")
+        ) || 0;
+
+
+    let goal =
+        Number(
+            localStorage.getItem("goal")
+        ) || 200000;
+
+
+    let transactions =
+        JSON.parse(
+            localStorage.getItem(
+                "transactions"
+            )
+        ) || [];
+
+
+
+    /* =========================
+       SAVE DATA
+    ========================= */
+
+
+    function saveData() {
+
+        localStorage.setItem(
+            "balance",
+            balance
+        );
+
+
+        localStorage.setItem(
+            "goal",
+            goal
+        );
+
+
+        localStorage.setItem(
+            "transactions",
+            JSON.stringify(
+                transactions
+            )
+        );
+
+    }
+
+
+
+    /* =========================
+       ADD SAVING
+    ========================= */
+
+
+    function addSaving() {
+
+        const input =
+            document.getElementById(
+                "savingAmount"
+            );
+
+
+        const amount =
+            Number(input.value);
+
+
+        if (amount <= 0) {
+
+            alert(
+                "Please enter a valid amount."
+            );
+
+            return;
+        }
+
+
+        balance += amount;
+
+
+        transactions.unshift({
+
+            type: "saving",
+
+            amount: amount,
+
+            date:
+                new Date()
+                .toLocaleDateString()
+
+        });
+
+
+        input.value = "";
+
+
+        saveData();
+
+
+        updateDashboard();
+
+    }
+
+
+
+    /* =========================
+       EXPENSE
+    ========================= */
+
+
+    function addExpense() {
+
+        const input =
+            document.getElementById(
+                "expenseAmount"
+            );
+
+
+        const amount =
+            Number(input.value);
+
+
+        if (amount <= 0) {
+
+            alert(
+                "Please enter a valid amount."
+            );
+
+            return;
+        }
+
+
+        if (amount > balance) {
+
+            alert(
+                "You don't have enough savings."
+            );
+
+            return;
+        }
+
+
+        balance -= amount;
+
+
+        transactions.unshift({
+
+            type: "expense",
+
+            amount: amount,
+
+            date:
+                new Date()
+                .toLocaleDateString()
+
+        });
+
+
+        input.value = "";
+
+
+        saveData();
+
+
+        updateDashboard();
+
+    }
+
+
+
+    /* =========================
+       SET GOAL
+    ========================= */
+
+
+    function setGoal() {
+
+        const input =
+            document.getElementById(
+                "goalInput"
+            );
+
+
+        const amount =
+            Number(input.value);
+
+
+        if (amount <= 0) {
+
+            alert(
+                "Please enter a valid goal."
+            );
+
+            return;
+        }
+
+
+        goal = amount;
+
+
+        input.value = "";
+
+
+        saveData();
+
+
+        updateDashboard();
+
+    }
+
+
+
+    /* =========================
+       UPDATE DASHBOARD
+    ========================= */
+
+
+    function updateDashboard() {
+
+        document.getElementById(
+            "balance"
+        ).textContent =
+            balance.toLocaleString();
+
+
+        document.getElementById(
+            "goalDisplay"
+        ).textContent =
+            goal.toLocaleString();
+
+
+        let percentage = 0;
+
+
+        if (goal > 0) {
+
+            percentage =
+                Math.min(
+                    (balance / goal) * 100,
+                    100
+                );
+
+        }
+
+
+        document.getElementById(
+            "percentage"
+        ).textContent =
+            Math.round(percentage);
+
+
+        document.getElementById(
+            "progressBar"
+        ).style.width =
+            percentage + "%";
+
+
+        document.getElementById(
+            "savedText"
+        ).textContent =
+            balance.toLocaleString() +
+            " EGP saved";
+
+
+        const remaining =
+            Math.max(
+                goal - balance,
+                0
+            );
+
+
+        document.getElementById(
+            "remainingText"
+        ).textContent =
+            remaining.toLocaleString() +
+            " EGP remaining";
+
+
+        updateTransactions();
+
+    }
+
+
+
+    /* =========================
+       TRANSACTIONS
+    ========================= */
+
+
+    function updateTransactions() {
+
+        const list =
+            document.getElementById(
+                "transactionList"
+            );
+
+
+        if (
+            transactions.length === 0
+        ) {
+
+            list.innerHTML =
+                '<div class="empty">' +
+                'No transactions yet.' +
+                '</div>';
+
+            return;
+        }
+
+
+        list.innerHTML = "";
+
+
+        transactions
+            .slice(0, 10)
+            .forEach(
+                transaction => {
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    div.className =
+                        "transaction";
+
+
+                    const isSaving =
+                        transaction.type ===
+                        "saving";
+
+
+                    div.innerHTML = `
+
+                        <div>
+
+                            <div
+                                class="transaction-name"
+                            >
+
+                                ${
+                                    isSaving
+                                    ? "💰 Money Added"
+                                    : "🛒 Expense"
+                                }
+
+                            </div>
+
+
+                            <div
+                                class="transaction-date"
+                            >
+
+                                ${transaction.date}
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="${
+                                isSaving
+                                ? "income"
+                                : "expense"
+                            }"
+                        >
+
+                            ${
+                                isSaving
+                                ? "+"
+                                : "-"
+                            }
+
+                            ${
+                                transaction.amount
+                                .toLocaleString()
+                            }
+
+                            EGP
+
+                        </div>
+
+                    `;
+
+
+                    list.appendChild(div);
+
+                }
+            );
+
+    }
+
+
+
+    /* =========================
+       TIPS
+    ========================= */
+
+
+    const tips = [
+
+        "Try saving your money immediately after receiving your salary.",
+
+        "Set a specific goal instead of simply saying: I want to save money.",
+
+        "Before buying something, ask yourself: Do I really need it?",
+
+        "Small savings become powerful when you stay consistent.",
+
+        "Track your expenses for one month to discover where your money goes.",
+
+        "Give every pound a purpose.",
+
+        "Your goal is 200,000 EGP. Focus on progress, not perfection."
+
+    ];
+
+
+    function randomTip() {
+
+        const random =
+            Math.floor(
+                Math.random() *
+                tips.length
+            );
+
+
+        document.getElementById(
+            "tipText"
+        ).textContent =
+            tips[random];
+
+    }
+
+
+
+    /* =========================
+       THEME SWITCHER
+    ========================= */
+
+
+    const themeSelector =
+        document.getElementById(
+            "themeSelector"
+        );
+
+
+    function applyTheme(theme) {
+
+        document.body.classList.remove(
+            "newyork",
+            "spider",
+            "gotham",
+            "batman"
+        );
+
+
+        if (theme !== "default") {
+
+            document.body.classList.add(
+                theme
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "theme",
+            theme
+        );
+
+    }
+
+
+
+    themeSelector.addEventListener(
+        "change",
+        function () {
+
+            applyTheme(
+                this.value
+            );
+
+        }
+    );
+
+
+
+    /* =========================
+       LOAD THEME
+    ========================= */
+
+
+    const savedTheme =
+        localStorage.getItem(
+            "theme"
+        ) || "default";
+
+
+    themeSelector.value =
+        savedTheme;
+
+
+    applyTheme(
+        savedTheme
+    );
+
+
+
+    /* =========================
+       START
+    ========================= */
+
+
+    updateDashboard();
+
+    randomTip();
+
+</script>
+
+
+</body>
+
+</html>
